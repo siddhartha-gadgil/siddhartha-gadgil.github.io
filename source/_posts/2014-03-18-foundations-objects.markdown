@@ -8,7 +8,7 @@ categories:
 
 Quoth Andrej Bauer:
 
-*Mathematicians like to imagine that their papers could in principle be formalized in set theory. This gives them a feeling of security, not unlike the one experienced by a devout man entering a venerable cathedral. It is a form of faith professed by logicians. Homotopy Type Theory is an alternative foundation to set theory.*
+> Mathematicians like to imagine that their papers could in principle be formalized in set theory. This gives them a feeling of security, not unlike the one experienced by a devout man entering a venerable cathedral. It is a form of faith professed by logicians. Homotopy Type Theory is an alternative foundation to set theory.
 
 In this series of posts, we explore the background behind, and the basics of, homotopy type theory. We begin by laying out the basic rules governing such foundations. 
 
