@@ -4,7 +4,7 @@
   <title><![CDATA[Logic, Types and Spaces]]></title>
   <link href="http://siddhartha-gadgil.github.io/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2014-04-01T10:49:42+05:30</updated>
+  <updated>2014-05-21T10:13:40+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Moving Blogs]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2014/05/21/moving-blogs/"/>
+    <updated>2014-05-21T10:09:44+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2014/05/21/moving-blogs</id>
+    <content type="html"><![CDATA[<p>This blog has moved to:</p>
+
+<p><a href="http://siddhartha-gadgil.github.io/LogicTypesSpaces/">http://siddhartha-gadgil.github.io/LogicTypesSpaces/</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Logic From Types]]></title>
