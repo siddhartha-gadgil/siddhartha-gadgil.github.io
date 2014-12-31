@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Logic, Types and Spaces]]></title>
+  <title><![CDATA[Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2014-12-30T18:13:18+05:30</updated>
+  <updated>2014-12-31T08:48:22+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -14,11 +14,20 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Quasi-literate Programming]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2014/12/31/quasi-literate-programming/"/>
+    <updated>2014-12-31T08:39:41+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2014/12/31/quasi-literate-programming</id>
+    <content type="html"><![CDATA[<p>This blog will now have various comments, often technical, concerning the issues I face while working, mainly programming for Automated theorem proving.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Moving Blogs]]></title>
     <link href="http://siddhartha-gadgil.github.io/blog/2014/05/21/moving-blogs/"/>
     <updated>2014-05-21T10:09:44+05:30</updated>
     <id>http://siddhartha-gadgil.github.io/blog/2014/05/21/moving-blogs</id>
-    <content type="html"><![CDATA[<p>This blog has moved to:</p>
+    <content type="html"><![CDATA[<p>The blog “Logic, Types and Spaces” has moved to:</p>
 
 <p><a href="http://siddhartha-gadgil.github.io/LogicTypesSpaces/">http://siddhartha-gadgil.github.io/LogicTypesSpaces/</a></p>
 ]]></content>
