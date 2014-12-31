@@ -9,7 +9,7 @@
   <meta name="author" content="Siddhartha Gadgil">
 
   
-  <meta name="description" content="This blog will now have various comments, often technical, concerning the issues I face while working, mainly programming for Automated theorem &hellip;">
+  <meta name="description" content="The best way to build differentiable functions for the typical learning system in function-finder is using combinators. At present there is some ad &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,171 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/31/linear-structure-implicits/">Linear Structure, Differentiable Functions Implicit Combinators</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-31T08:52:22+05:30" pubdate data-updated="true">Dec 31<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The best way to build differentiable functions for the typical learning system in function-finder is using <em>combinators</em>. At present there is some ad hoc version of this. The better way is to use linear structures systematically.</p>
+
+<h2 id="linear-structures">Linear structures</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">case</span> <span class="k">class</span> <span class="nc">LinearStructure</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="n">sum</span><span class="k">:</span> <span class="o">(</span><span class="kt">A</span><span class="o">,</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">A</span><span class="o">,</span> <span class="n">mult</span> <span class="k">:</span> <span class="o">(</span><span class="kt">Double</span><span class="o">,</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">A</span><span class="o">){</span>
+</span><span class="line">  <span class="k">def</span> <span class="n">diff</span><span class="o">(</span><span class="n">frm</span><span class="k">:</span> <span class="kt">A</span><span class="o">,</span> <span class="n">remove</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=</span> <span class="n">sum</span><span class="o">(</span><span class="n">frm</span><span class="o">,</span> <span class="n">mult</span><span class="o">(-</span><span class="mf">1.0</span><span class="o">,</span> <span class="n">remove</span><span class="o">))</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Linear Spaces can be built with
+* Real numbers - Double
+* Finite Distributions have ++ and *
+* Pairs of linear spaces
+* Differentiable functions between linear spaces
+* (Eventually) Maps with values in Linear spaces - for representation learning.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">case</span> <span class="k">class</span> <span class="nc">LinearStructure</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="n">sum</span><span class="k">:</span> <span class="o">(</span><span class="kt">A</span><span class="o">,</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">A</span><span class="o">,</span> <span class="n">mult</span> <span class="k">:</span> <span class="o">(</span><span class="kt">Double</span><span class="o">,</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">A</span><span class="o">){</span>
+</span><span class="line">  <span class="k">def</span> <span class="n">diff</span><span class="o">(</span><span class="n">frm</span><span class="k">:</span> <span class="kt">A</span><span class="o">,</span> <span class="n">remove</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=</span> <span class="n">sum</span><span class="o">(</span><span class="n">frm</span><span class="o">,</span> <span class="n">mult</span><span class="o">(-</span><span class="mf">1.0</span><span class="o">,</span> <span class="n">remove</span><span class="o">))</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">implicit</span> <span class="k">val</span> <span class="nc">RealsAsLinearStructure</span> <span class="k">=</span> <span class="nc">LinearStructure</span><span class="o">[</span><span class="kt">Double</span><span class="o">]((</span><span class="k">_</span><span class="o">+</span><span class="k">_</span><span class="o">),</span> <span class="o">(</span><span class="k">_</span><span class="o">*</span><span class="k">_</span><span class="o">))</span>
+</span><span class="line">
+</span><span class="line"><span class="k">implicit</span> <span class="k">def</span> <span class="nc">VectorPairs</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">](</span><span class="k">implicit</span> <span class="n">lsa</span><span class="k">:</span> <span class="kt">LinearStructure</span><span class="o">[</span><span class="kt">A</span><span class="o">],</span> <span class="n">lsb</span><span class="k">:</span> <span class="kt">LinearStructure</span><span class="o">[</span><span class="kt">B</span><span class="o">])</span><span class="k">:</span> <span class="kt">LinearStructure</span><span class="o">[(</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">)]</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class="line">  <span class="k">def</span> <span class="n">sumpair</span><span class="o">(</span><span class="n">fst</span><span class="k">:</span> <span class="o">(</span><span class="kt">A</span><span class="o">,</span> <span class="kt">B</span><span class="o">),</span> <span class="n">scnd</span><span class="k">:</span> <span class="o">(</span><span class="kt">A</span><span class="o">,</span> <span class="kt">B</span><span class="o">))</span> <span class="o">=(</span><span class="n">lsa</span><span class="o">.</span><span class="n">sum</span><span class="o">(</span><span class="n">fst</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">scnd</span><span class="o">.</span><span class="n">_1</span><span class="o">),</span> <span class="n">lsb</span><span class="o">.</span><span class="n">sum</span><span class="o">(</span><span class="n">fst</span><span class="o">.</span><span class="n">_2</span><span class="o">,</span> <span class="n">scnd</span><span class="o">.</span><span class="n">_2</span><span class="o">))</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">def</span> <span class="n">multpair</span><span class="o">(</span><span class="n">sc</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">vect</span><span class="k">:</span> <span class="o">(</span><span class="kt">A</span><span class="o">,</span> <span class="kt">B</span><span class="o">))</span> <span class="k">=</span> <span class="o">(</span><span class="n">lsa</span><span class="o">.</span><span class="n">mult</span><span class="o">(</span><span class="n">sc</span><span class="o">,</span> <span class="n">vect</span><span class="o">.</span><span class="n">_1</span><span class="o">),</span> <span class="n">lsb</span><span class="o">.</span><span class="n">mult</span><span class="o">(</span><span class="n">sc</span><span class="o">,</span> <span class="n">vect</span><span class="o">.</span><span class="n">_2</span><span class="o">))</span>
+</span><span class="line">
+</span><span class="line">  <span class="nc">LinearStructure</span><span class="o">(</span><span class="n">sumpair</span><span class="o">,</span> <span class="n">multpair</span><span class="o">)</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">implicit</span> <span class="k">def</span> <span class="nc">FiniteDistVec</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="k">=</span> <span class="nc">LinearStructure</span><span class="o">[</span><span class="kt">FiniteDistribution</span><span class="o">[</span><span class="kt">T</span><span class="o">]](</span><span class="k">_</span><span class="o">++</span><span class="k">_</span><span class="o">,</span> <span class="o">(</span><span class="n">w</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">d</span> <span class="o">*</span> <span class="n">w</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="to-do">To Do:</h3>
+<ul>
+  <li>Create a linear structure for differentiable functions</li>
+  <li>Have functions that implicitly use linear structures.</li>
+</ul>
+
+<h2 id="more-vector-structures">More vector structures</h2>
+
+<p>In addition, we need <em>inner products</em> for computing certain gradients as well as <em>totals</em> for normalization. These are built for
+* Finite distributions
+* pairs
+* Real numbers
+* (Eventually) Maps with co-domain having inner products and totals.</p>
+
+<h2 id="differentiable-functions">Differentiable functions</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">trait</span> <span class="nc">DiffbleFunction</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">]</span> <span class="nc">extends</span> <span class="o">(</span><span class="n">A</span> <span class="k">=&gt;</span> <span class="n">B</span><span class="o">){</span><span class="n">self</span> <span class="k">=&gt;</span>
+</span><span class="line">  <span class="k">def</span> <span class="n">grad</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span> <span class="k">:</span> <span class="kt">B</span> <span class="o">=&gt;</span> <span class="n">A</span>
+</span><span class="line">
+</span><span class="line">  <span class="cm">/**</span>
+</span><span class="line"><span class="cm">  * Composition f *: g is f(g(_))</span>
+</span><span class="line"><span class="cm">  */</span>
+</span><span class="line">  <span class="k">def</span> <span class="o">*:[</span><span class="kt">C</span><span class="o">](</span><span class="n">that</span><span class="k">:</span> <span class="kt">DiffbleFunction</span><span class="o">[</span><span class="kt">B</span>, <span class="kt">C</span><span class="o">])</span> <span class="k">=</span> <span class="n">andThen</span><span class="o">(</span><span class="n">that</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">def</span> <span class="n">andThen</span><span class="o">[</span><span class="kt">C</span><span class="o">](</span><span class="n">that</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="nc">DiffbleFunction</span><span class="o">[</span><span class="kt">B</span>, <span class="kt">C</span><span class="o">])</span><span class="k">:</span> <span class="kt">DiffbleFunction</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">C</span><span class="o">]</span> <span class="k">=</span> <span class="nc">DiffbleFunction</span><span class="o">((</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">that</span><span class="o">(</span><span class="k">this</span><span class="o">(</span><span class="n">a</span><span class="o">)))(</span>
+</span><span class="line">    <span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=&gt;</span>
+</span><span class="line">    <span class="o">(</span><span class="n">c</span><span class="k">:</span> <span class="kt">C</span><span class="o">)</span> <span class="k">=&gt;</span>
+</span><span class="line">    <span class="n">grad</span><span class="o">(</span><span class="n">a</span><span class="o">)(</span><span class="n">that</span><span class="o">.</span><span class="n">grad</span><span class="o">(</span><span class="k">this</span><span class="o">(</span><span class="n">a</span><span class="o">))(</span><span class="n">c</span><span class="o">)))</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">  <span class="k">object</span> <span class="nc">DiffbleFunction</span><span class="o">{</span>
+</span><span class="line">    <span class="k">def</span> <span class="n">apply</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">](</span><span class="n">f</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="n">A</span> <span class="k">=&gt;</span> <span class="n">B</span><span class="o">)(</span><span class="n">grd</span><span class="k">:</span> <span class="o">=&gt;</span> <span class="n">A</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">B</span> <span class="k">=&gt;</span> <span class="n">A</span><span class="o">))</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">DiffbleFunction</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">]{</span>
+</span><span class="line">      <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=</span> <span class="n">f</span><span class="o">(</span><span class="n">a</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">def</span> <span class="n">grad</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=</span> <span class="n">grd</span><span class="o">(</span><span class="n">a</span><span class="o">)</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">    <span class="k">val</span> <span class="n">hyptan</span> <span class="k">=</span> <span class="n">apply</span><span class="o">[</span><span class="kt">Double</span>, <span class="kt">Double</span><span class="o">]((</span><span class="n">arg</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">math</span><span class="o">.</span><span class="n">tanh</span><span class="o">(</span><span class="n">arg</span><span class="o">))((</span><span class="n">arg</span> <span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">y</span><span class="o">/(</span><span class="n">math</span><span class="o">.</span><span class="n">cosh</span><span class="o">(</span><span class="n">y</span><span class="o">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cosh</span><span class="o">(</span><span class="n">y</span><span class="o">)))</span>
+</span><span class="line">  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Differentiable functions are built from
+* (Partial) Moves on X giving FD(X) -&gt; FD(X)
+* (Partial) Combinations on X giving FD(X) -&gt; FD(X)
+* Co-ordinate functions on FD(X).
+* Inclusion of a basis vector.
+* Projections and Inclusions for pairs.
+* Scalar product of differentiable functions, $x\mapsto f(x) * g(x)$ with $f: V \to \R$ and $g: V\to W$.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1113,6 +1278,10 @@ We can <em>lift</em> such a partially defined function to one taking values in a
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/31/linear-structure-implicits/">Linear Structure, Differentiable Functions Implicit Combinators</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/12/31/quasi-literate-programming/">Quasi-literate Programming</a>
       </li>
     
@@ -1126,10 +1295,6 @@ We can <em>lift</em> such a partially defined function to one taking values in a
     
       <li class="post">
         <a href="/blog/2014/03/22/fun-with-lists/">Fun With Lists</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/21/dependent-function-types/">Dependent Function Types: Sections of a Bundle</a>
       </li>
     
   </ul>
