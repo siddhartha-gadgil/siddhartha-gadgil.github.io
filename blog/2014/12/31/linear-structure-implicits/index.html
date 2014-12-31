@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Linear Structure, Differentiable Functions Implicit Combinators - Automating Mathematics</title>
+  <title>Linear Structure, Differentiable Functions (Implicit) Combinators - Automating Mathematics</title>
   <meta name="author" content="Siddhartha Gadgil">
 
   
@@ -83,7 +83,7 @@ MathJax.Hub.Config({
   
   <header>
     
-      <h1 class="entry-title">Linear Structure, Differentiable Functions Implicit Combinators</h1>
+      <h1 class="entry-title">Linear Structure, Differentiable Functions (Implicit) Combinators</h1>
     
     
       <p class="meta">
@@ -118,12 +118,15 @@ MathJax.Hub.Config({
 </span><span class="line"><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Linear Spaces can be built with
-* Real numbers - Double
-* Finite Distributions have ++ and *
-* Pairs of linear spaces
-* Differentiable functions between linear spaces
-* (Eventually) Maps with values in Linear spaces - for representation learning.</p>
+<p>Linear Spaces can be built with</p>
+
+<ul>
+  <li>Real numbers - Double</li>
+  <li>Finite Distributions have ++ and *</li>
+  <li>Pairs of linear spaces</li>
+  <li>Differentiable functions between linear spaces</li>
+  <li>(Eventually) Maps with values in Linear spaces - for representation learning.</li>
+</ul>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -158,6 +161,7 @@ MathJax.Hub.Config({
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <h3 id="to-do">To Do:</h3>
+
 <ul>
   <li>Create a linear structure for differentiable functions</li>
   <li>Have functions that implicitly use linear structures.</li>
@@ -165,11 +169,14 @@ MathJax.Hub.Config({
 
 <h2 id="more-vector-structures">More vector structures</h2>
 
-<p>In addition, we need <em>inner products</em> for computing certain gradients as well as <em>totals</em> for normalization. These are built for
-* Finite distributions
-* pairs
-* Real numbers
-* (Eventually) Maps with co-domain having inner products and totals.</p>
+<p>In addition, we need <em>inner products</em> for computing certain gradients as well as <em>totals</em> for normalization. These are built for</p>
+
+<ul>
+  <li>Finite distributions</li>
+  <li>pairs</li>
+  <li>Real numbers</li>
+  <li>(Eventually) Maps with co-domain having inner products and totals.</li>
+</ul>
 
 <h2 id="differentiable-functions">Differentiable functions</h2>
 
@@ -197,9 +204,6 @@ MathJax.Hub.Config({
 <span class="line-number">22</span>
 <span class="line-number">23</span>
 <span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
 </pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">trait</span> <span class="nc">DiffbleFunction</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">]</span> <span class="nc">extends</span> <span class="o">(</span><span class="n">A</span> <span class="k">=&gt;</span> <span class="n">B</span><span class="o">){</span><span class="n">self</span> <span class="k">=&gt;</span>
 </span><span class="line">  <span class="k">def</span> <span class="n">grad</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span> <span class="k">:</span> <span class="kt">B</span> <span class="o">=&gt;</span> <span class="n">A</span>
 </span><span class="line">
@@ -223,19 +227,52 @@ MathJax.Hub.Config({
 </span><span class="line">      <span class="k">def</span> <span class="n">grad</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span> <span class="k">=</span> <span class="n">grd</span><span class="o">(</span><span class="n">a</span><span class="o">)</span>
 </span><span class="line">    <span class="o">}</span>
 </span><span class="line">
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">    <span class="k">val</span> <span class="n">hyptan</span> <span class="k">=</span> <span class="n">apply</span><span class="o">[</span><span class="kt">Double</span>, <span class="kt">Double</span><span class="o">]((</span><span class="n">arg</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">math</span><span class="o">.</span><span class="n">tanh</span><span class="o">(</span><span class="n">arg</span><span class="o">))((</span><span class="n">arg</span> <span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">y</span><span class="o">/(</span><span class="n">math</span><span class="o">.</span><span class="n">cosh</span><span class="o">(</span><span class="n">y</span><span class="o">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cosh</span><span class="o">(</span><span class="n">y</span><span class="o">)))</span>
 </span><span class="line">  <span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Differentiable functions are built from
-* (Partial) Moves on X giving FD(X) -&gt; FD(X)
-* (Partial) Combinations on X giving FD(X) -&gt; FD(X)
-* Co-ordinate functions on FD(X).
-* Inclusion of a basis vector.
-* Projections and Inclusions for pairs.
-* Scalar product of differentiable functions, $x\mapsto f(x) * g(x)$ with $f: V \to \R$ and $g: V\to W$.</p>
+<p>Differentiable functions are built from</p>
+
+<ul>
+  <li>Composing and iterating differentiable functions.</li>
+  <li>(Partial) Moves on X giving FD(X) -&gt; FD(X)</li>
+  <li>(Partial) Combinations on X giving FD(X) -&gt; FD(X)</li>
+  <li>Co-ordinate functions on FD(X).</li>
+  <li>Inclusion of a basis vector.</li>
+  <li>Projections and Inclusions for pairs.</li>
+  <li>Scalar product of differentiable functions, $x\mapsto f(x) * g(x)$ with $f: V \to \R$ and $g: V\to W$.</li>
+  <li><strong>Islands:</strong> Recursive definitions in terms of the function itself - more precisely a sequence of functions at different <em>depths</em>.</li>
+</ul>
+
+<h3 id="to-do-1">To Do:</h3>
+
+<ul>
+  <li>Clean up the present ad hoc constructors replacing them by combinators.</li>
+</ul>
+
+<h2 id="islands">Islands</h2>
+
+<ul>
+  <li>
+    <p>After adding an island, we get a family of differentiable functions $f_d$ indexed by depth.</p>
+  </li>
+  <li>
+    <p>Determined by:</p>
+
+    <ul>
+      <li>An initial family of differentiable functions $g_d$</li>
+      <li>A transformation on differentiable functions $f \mapsto L(f)$.</li>
+      <li>An a priori bound on depth beyond which we get zero.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Recurrence relation:</p>
+
+    <ul>
+      <li>$f_d = g_d + L(f_{d+1})$.</li>
+      <li>this simplifies a priori if $d$ is large enough.</li>
+    </ul>
+  </li>
+</ul>
 </div>
 
 
@@ -299,7 +336,7 @@ MathJax.Hub.Config({
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/12/31/linear-structure-implicits/">Linear Structure, Differentiable Functions Implicit Combinators</a>
+        <a href="/blog/2014/12/31/linear-structure-implicits/">Linear Structure, Differentiable Functions (Implicit) Combinators</a>
       </li>
     
       <li class="post">
