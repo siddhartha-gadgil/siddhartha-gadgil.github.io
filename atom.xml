@@ -4,7 +4,7 @@
   <title><![CDATA[Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2014-12-31T11:40:32+05:30</updated>
+  <updated>2015-01-01T16:10:01+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -75,7 +75,8 @@
 <h3 id="to-do">To Do:</h3>
 
 <ul>
-  <li>Create a linear structure for differentiable functions</li>
+  <li>Add a field for the zero vector.</li>
+  <li>Create a linear structure for differentiable functions.</li>
   <li>Have functions that implicitly use linear structures.</li>
 </ul>
 
@@ -151,8 +152,15 @@
   <li>Co-ordinate functions on FD(X).</li>
   <li>Inclusion of a basis vector.</li>
   <li>Projections and Inclusions for pairs.</li>
-  <li>Scalar product of differentiable functions, $x\mapsto f(x) * g(x)$ with $f: V \to \R$ and $g: V\to W$.</li>
-  <li><strong>Islands:</strong> Recursive definitions in terms of the function itself - more precisely a sequence of functions at different <em>depths</em>.</li>
+  <li>Scalar product of differentiable functions, $x\mapsto f(x) * g(x)$ with $f: V \to \mathbb{R}$ and $g: V\to W$.</li>
+  <li>The sum of a set of differentiable functions X \to Y, with the set of functions depending on $x : X$.</li>
+</ul>
+
+<p>From the above, we should be able to build.</p>
+
+<ul>
+  <li><strong>Islands:</strong> Recursive definitions in terms of the function itself - more precisely a sequence of functions at different <em>depths</em> (in a more rational form).</li>
+  <li><strong>Multiple islands:</strong> A recurrence corresponding to a lot of island terms.</li>
 </ul>
 
 <h3 id="to-do-1">To Do:</h3>
@@ -164,26 +172,39 @@
 <h2 id="islands">Islands</h2>
 
 <ul>
+  <li>After adding an island, we get a family of differentiable functions $f_d$ indexed by depth.</li>
+  <li>This can be simply viewed as a recursive definition.</li>
   <li>
-    <p>After adding an island, we get a family of differentiable functions $f_d$ indexed by depth.</p>
+    <p>Given a function $g$, we get a function at depth $d$ by iterating $2^d$ times by repeated squaring.</p>
   </li>
   <li>
     <p>Determined by:</p>
 
     <ul>
-      <li>An initial family of differentiable functions $g_d$</li>
+      <li>An initial family of differentiable functions $g_d$, corresponding to iterating $2^d$ times.</li>
       <li>A transformation on differentiable functions $f \mapsto L(f)$.</li>
-      <li>An a priori bound on depth beyond which we get zero.</li>
     </ul>
   </li>
   <li>
     <p>Recurrence relation:</p>
 
     <ul>
-      <li>$f_d = g_d + L(f_{d+1})$.</li>
-      <li>this simplifies a priori if $d$ is large enough.</li>
+      <li>$f_d = g_d + L(f_{d-1})$, for $d \geq 0$, with $f_{-1} = 0$.</li>
+      <li>Here $L(f) = i \circ f \circ j$.</li>
+      <li>When $d=0$, the recurrence relation just gives just gives $id = id$.</li>
+      <li>Then $d=1$, we get $f_1 = g_1 + L(id)$.</li>
     </ul>
   </li>
+</ul>
+
+<h2 id="multiple-islands">Multiple Islands</h2>
+
+<ul>
+  <li>We have a set of islands associated to a collection of objects, with a differentiable function associated to each.</li>
+  <li>We can assume the set to be larger, with functions for the rest being zero. So the set is really an a priori bound.</li>
+  <li>We get a recurence relation:</li>
+  <li>$f_d(\cdot) = g_d(\cdot) + \sum_v i_v(\cdot) * L_v(f_{d-1}(\cdot)).$</li>
+  <li>Here $i_v$ is evaluation at $v$, for a pair of finite distributions.</li>
 </ul>
 ]]></content>
   </entry>
