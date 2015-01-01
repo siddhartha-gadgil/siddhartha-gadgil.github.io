@@ -44,7 +44,8 @@ implicit def FiniteDistVec[T] = LinearStructure[FiniteDistribution[T]](_++_, (w,
 
 ###To Do:
 
-* Create a linear structure for differentiable functions
+* Add a field for the zero vector.
+* Create a linear structure for differentiable functions.
 * Have functions that implicitly use linear structures.
 
 ## More vector structures
@@ -93,8 +94,13 @@ Differentiable functions are built from
 * Co-ordinate functions on FD(X).
 * Inclusion of a basis vector.
 * Projections and Inclusions for pairs.
-* Scalar product of differentiable functions, $x\mapsto f(x) * g(x)$ with $f: V \to \R$ and $g: V\to W$.
-* **Islands:** Recursive definitions in terms of the function itself - more precisely a sequence of functions at different _depths_.
+* Scalar product of differentiable functions, $x\mapsto f(x) * g(x)$ with $f: V \to \mathbb{R}$ and $g: V\to W$.
+* The sum of a set of differentiable functions X \to Y, with the set of functions depending on $x : X$.
+
+From the above, we should be able to build.
+
+* **Islands:** Recursive definitions in terms of the function itself - more precisely a sequence of functions at different _depths_ (in a more rational form).
+* **Multiple islands:** A recurrence corresponding to a lot of island terms.
 
 ### To Do:
 
@@ -103,15 +109,27 @@ Differentiable functions are built from
 ## Islands
 
 * After adding an island, we get a family of differentiable functions $f_d$ indexed by depth.
+* This can be simply viewed as a recursive definition.
+* Given a function $g$, we get a function at depth $d$ by iterating $2^d$ times by repeated squaring.
 
 * Determined by:
 
-  * An initial family of differentiable functions $g_d$
-  *  A transformation on differentiable functions $f \mapsto L(f)$.
-  * An a priori bound on depth beyond which we get zero.
+  * An initial family of differentiable functions $g_d$, corresponding to iterating $2^d$ times.
+  * A transformation on differentiable functions $f \mapsto L(f)$.
 
 
 * Recurrence relation:
 
-  * $f\_d = g\_d + L(f\_{d+1})$.
-  * this simplifies a priori if $d$ is large enough.
+  * $f\_d = g\_d + L(f\_{d-1})$, for $d \geq 0$, with $f_{-1} = 0$.
+  * Here $L(f) = i \circ f \circ j$.
+  * When $d=0$, the recurrence relation just gives just gives $id = id$.
+  * Then $d=1$, we get $f\_1 = g\_1 + L(id)$.
+
+
+## Multiple Islands
+
+* We have a set of islands associated to a collection of objects, with a differentiable function associated to each.
+* We can assume the set to be larger, with functions for the rest being zero. So the set is really an a priori bound.
+* We get a recurence relation:
+* $f\_d(\cdot) = g\_d(\cdot) + \sum_v i\_v(\cdot) * L\_v(f\_{d-1}(\cdot)).$
+* Here $i\_v$ is evaluation at $v$, for a pair of finite distributions.
