@@ -4,7 +4,7 @@
   <title><![CDATA[Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2015-01-01T16:10:01+05:30</updated>
+  <updated>2015-01-02T12:29:02+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Gradient of Product]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2015/01/02/gradient-of-product/"/>
+    <updated>2015-01-02T10:38:10+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2015/01/02/gradient-of-product</id>
+    <content type="html"><![CDATA[<p>A subtle differentiable function is the scalar product,</p>
+
+<script type="math/tex; mode=display">f: (\alpha, v) \mapsto \alpha v</script>
+
+<p>for a vector space $V$.</p>
+
+<h2 id="derivative">Derivative</h2>
+
+<p>By Liebniz rule,  the total derivative is</p>
+
+<script type="math/tex; mode=display">Df(\alpha, v)(\alpha', v') = \alpha v' + \alpha' v</script>
+
+<h2 id="gradient">Gradient</h2>
+
+<p>Note that depends on the vector space structure on $(\mathbb{R}, V)$. For a vector $w$ in $V$, note that we can write</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+<Df(\alpha, v)(\alpha', v'), w> = \alpha' <v, w> + <v', \alpha w> = <(\alpha', w'), (<v, w>, \alpha w) %]]&gt;</script>
+
+<p>By definition of gradient (as adjoint derivative), we have</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+\Delta f (\alpha, v)(w) = (<v, w>, \alpha w) %]]&gt;</script>
+
+<h2 id="code">Code</h2>
+
+<p>We need an additional implicit structure with combinators:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">case</span> <span class="k">class</span> <span class="nc">InnerProduct</span><span class="o">[</span><span class="kt">V</span><span class="o">](</span><span class="n">dot</span><span class="k">:</span> <span class="o">(</span><span class="kt">V</span><span class="o">,</span> <span class="kt">V</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Double</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="n">vdot</span><span class="o">[</span><span class="kt">V</span><span class="o">](</span><span class="k">implicit</span> <span class="n">ip</span><span class="k">:</span> <span class="kt">InnerProduct</span><span class="o">[</span><span class="kt">V</span><span class="o">])</span> <span class="k">=</span> <span class="n">ip</span><span class="o">.</span><span class="n">dot</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Linear Structure, Differentiable Functions (Implicit) Combinators]]></title>
@@ -75,9 +118,9 @@
 <h3 id="to-do">To Do:</h3>
 
 <ul>
-  <li>Add a field for the zero vector.</li>
-  <li>Create a linear structure for differentiable functions.</li>
-  <li>Have functions that implicitly use linear structures.</li>
+  <li>Add a field for the zero vector (done).</li>
+  <li>Create a linear structure for differentiable functions(done).</li>
+  <li>Have functions that implicitly use linear structures(done).</li>
 </ul>
 
 <h2 id="more-vector-structures">More vector structures</h2>
