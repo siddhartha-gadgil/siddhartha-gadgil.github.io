@@ -44,9 +44,9 @@ implicit def FiniteDistVec[T] = LinearStructure[FiniteDistribution[T]](_++_, (w,
 
 ###To Do:
 
-* Add a field for the zero vector.
-* Create a linear structure for differentiable functions.
-* Have functions that implicitly use linear structures.
+* Add a field for the zero vector (done).
+* Create a linear structure for differentiable functions(done).
+* Have functions that implicitly use linear structures(done).
 
 ## More vector structures
 
