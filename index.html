@@ -9,7 +9,7 @@
   <meta name="author" content="Siddhartha Gadgil">
 
   
-  <meta name="description" content="A subtle differentiable function is the scalar product, for a vector space $V$. Derivative By Liebniz rule, the total derivative is Gradient Note &hellip;">
+  <meta name="description" content="Basic functions and Combinators We build differentiable functions for our basic learning system using some basic ones and combinators: compositions &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,81 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/02/differentiable-function-combinators/">Differentiable Function Combinators</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-02T15:24:10+05:30" pubdate data-updated="true">Jan 2<span>nd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="basic-functions-and-combinators">Basic functions and Combinators</h2>
+
+<p>We build differentiable functions for our basic learning system using some basic ones and combinators:</p>
+
+<ul>
+  <li>compositions</li>
+  <li>sums and scalar products of differentiable functions.</li>
+  <li>product of a real valued and a vector valued function - the subtlest case.</li>
+  <li>identity function.</li>
+  <li>projections on (V, W)</li>
+  <li>inclusions to (V, W)</li>
+  <li>evaluation of a finite distribution at a point.</li>
+  <li>atomic distribution as a function of weight.</li>
+  <li>sum of a set of functions, with even the set depending on weight.
+    <ul>
+      <li>this can be interpreted as the sum of a fixed set of functions, but with all but finitely many  zero.</li>
+    </ul>
+  </li>
+  <li>repeated squaring $k$ times, with $k=0$ and $k&lt;0$ cases.</li>
+  <li>recursive definitions for families indexed by integers.</li>
+</ul>
+
+<h2 id="derived-from-these">Derived from these</h2>
+
+<ul>
+  <li>(optional) moves</li>
+  <li>(optional) pairings</li>
+  <li>linear combinations.</li>
+</ul>
+
+<h2 id="convenience-code">Convenience code</h2>
+
+<ul>
+  <li>Have implicit conversion from
+    <ul>
+      <li>a type T implicitly depending on a linear structure on T to have methods ++ and *:</li>
+      <li>DiffbleFunction[V, V] to a class with a multiplication method **:</li>
+    </ul>
+  </li>
+</ul>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1406,6 +1481,10 @@ We can <em>lift</em> such a partially defined function to one taking values in a
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/01/02/differentiable-function-combinators/">Differentiable Function Combinators</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/01/02/gradient-of-product/">Gradient of Product</a>
       </li>
     
@@ -1419,10 +1498,6 @@ We can <em>lift</em> such a partially defined function to one taking values in a
     
       <li class="post">
         <a href="/blog/2014/05/21/moving-blogs/">Moving Blogs</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/26/logic-from-types/">Logic From Types</a>
       </li>
     
   </ul>

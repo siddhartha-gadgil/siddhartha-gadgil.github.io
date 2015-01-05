@@ -39,12 +39,18 @@
         <lastmod>2015-01-02T15:01:30+05:30</lastmod>
     </url>
     <url>
+        <loc>
+            http://siddhartha-gadgil.github.io/blog/2015/01/02/differentiable-function-combinators/
+        </loc>
+        <lastmod>2015-01-02T23:06:40+05:30</lastmod>
+    </url>
+    <url>
         <loc>http://siddhartha-gadgil.github.io/</loc>
-        <lastmod>2015-01-02T15:01:30+05:30</lastmod>
+        <lastmod>2015-01-02T23:06:40+05:30</lastmod>
     </url>
     <url>
         <loc>http://siddhartha-gadgil.github.io/blog/archives/</loc>
-        <lastmod>2015-01-02T15:01:30+05:30</lastmod>
+        <lastmod>2015-01-02T23:06:40+05:30</lastmod>
     </url>
     <url>
         <loc>http://siddhartha-gadgil.github.io/robots.txt</loc>
