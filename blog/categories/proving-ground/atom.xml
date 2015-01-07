@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Proving-Ground | Automating Mathematics]]></title>
+  <link href="http://siddhartha-gadgil.github.io/blog/categories/proving-ground/atom.xml" rel="self"/>
+  <link href="http://siddhartha-gadgil.github.io/"/>
+  <updated>2015-01-07T12:20:11+05:30</updated>
+  <id>http://siddhartha-gadgil.github.io/</id>
+  <author>
+    <name><![CDATA[Siddhartha Gadgil]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Blending Pruning and Backprop]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2015/01/07/blending-pruning-and-backprop/"/>
+    <updated>2015-01-07T10:25:14+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2015/01/07/blending-pruning-and-backprop</id>
+    <content type="html"><![CDATA[<h2 id="the-problem">The problem</h2>
+
+<ul>
+  <li>One way to evolve a system is the <em>genetic algorithm</em> style, where we consider the fitness of the <em>final</em> elements and prune based on this. This however has trivial credit assignment.</li>
+  <li>At the other extreme is a pure back-propogation. This has nice credit assignment, but done directly the support never changes.</li>
+</ul>
+
+<h2 id="solution">Solution</h2>
+
+<ul>
+  <li>Firstly, there must be an identity term in the evolution, so credit <em>can</em> go to objects just persisting.</li>
+  <li>Note that while the result of a big sum does not depend on terms that are zero, specifically $\mu(v)f$ with $\mu(v) = 0$, the gradient still depends on such terms. Specifically we can get a flow back to add weight to $v$  </li>
+  <li>We <em>decouple</em> the big sum component, so that when we apply to an argument which is a distribution, we do not just take a set of functions depending on that distribution. We can instead take a specified support.</li>
+  <li>We take a big sum over all generated elements, to allow some of them to acquire weight, while computing the gradient.</li>
+  <li>We should periodically prune by weight, but only after flowing for long enough to allow for picking up weight.</li>
+</ul>
+
+<h2 id="code">Code</h2>
+
+<ul>
+  <li>We consider differentiable functions that also depend on a subset of V, by taking linear combinations including bigsums that are the <em>union</em> of the support of a distribution with the given subset.</li>
+  <li>For propagation, we just take an empty subset of V.</li>
+  <li>Once we have the image, we take its (essential) support as the given subset of V. We recompute the differentiable function. Note that the value is unchanged.</li>
+  <li>We use the gradient of the new function to back-propagate.</li>
+  <li>This gives a single loop, which we repeat to evolve the system.</li>
+  <li>Purge after looping for enough time.</li>
+</ul>
+
+<h2 id="using-the-identity">Using the identity</h2>
+
+<ul>
+  <li>The gradient of the <strong>identity</strong> does not depend on any form of <em>a priori</em> support.</li>
+  <li>Hence the gradient of a persistence term, i.e., identity multiplied by a weigh, attributes weight to everything in the final distribution.</li>
+  <li><strong>Note:</strong> This lets us avoid the above complications.  </li>
+</ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Differentiable Function Combinators]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2015/01/02/differentiable-function-combinators/"/>
+    <updated>2015-01-02T15:24:10+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2015/01/02/differentiable-function-combinators</id>
+    <content type="html"><![CDATA[<h2 id="basic-functions-and-combinators">Basic functions and Combinators</h2>
+
+<p>We build differentiable functions for our basic learning system using some basic ones and combinators:</p>
+
+<ul>
+  <li>compositions (in class)</li>
+  <li>sums and scalar products of differentiable functions. (done)</li>
+  <li>product of a real valued and a vector valued function - the subtlest case (done).</li>
+  <li>identity function (done).</li>
+  <li>projections on (V, W) (done)</li>
+  <li>inclusions to (V, W) (dome)</li>
+  <li>evaluation of a finite distribution at a point.</li>
+  <li>atomic distribution as a function of weight.</li>
+  <li>sum of a set of functions, with even the set depending on argument (done).
+    <ul>
+      <li>this can be interpreted as the sum of a fixed set of functions, but with all but finitely many  zero.</li>
+    </ul>
+  </li>
+  <li>repeated squaring $k$ times, with $k=0$ and $k&lt;0$ cases (done).</li>
+  <li>recursive definitions for families indexed by integers - generic given zero. Done (for vector spaces).</li>
+</ul>
+
+<h2 id="derived-from-these">Derived from these</h2>
+
+<ul>
+  <li>(optional) moves</li>
+  <li>(optional) pairings</li>
+  <li>linear combinations.</li>
+</ul>
+
+<h2 id="convenience-code">Convenience code</h2>
+
+<ul>
+  <li>Have implicit conversion from
+    <ul>
+      <li>a type T implicitly depending on a linear structure on T to have methods ++ and *:</li>
+      <li>DiffbleFunction[V, V] to a class with a multiplication method **:</li>
+    </ul>
+  </li>
+</ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Gradient of Product]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2015/01/02/gradient-of-product/"/>
+    <updated>2015-01-02T10:38:10+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2015/01/02/gradient-of-product</id>
+    <content type="html"><![CDATA[<p>A subtle differentiable function is the scalar product,</p>
+
+<script type="math/tex; mode=display">f: (\alpha, v) \mapsto \alpha v</script>
+
+<p>for a vector space $V$.</p>
+
+<h2 id="derivative">Derivative</h2>
+
+<p>By Liebniz rule,  the total derivative is</p>
+
+<script type="math/tex; mode=display">Df(\alpha, v)(\alpha', v') = \alpha v' + \alpha' v</script>
+
+<h2 id="gradient">Gradient</h2>
+
+<p>Note that depends on the vector space structure on $(\mathbb{R}, V)$. For a vector $w$ in $V$, note that we can write</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+<Df(\alpha, v)(\alpha', v'), w> = \alpha' <v, w> + <v', \alpha w> = <(\alpha', w'), (<v, w>, \alpha w) %]]&gt;</script>
+
+<p>By definition of gradient (as adjoint derivative), we have</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+\Delta f (\alpha, v)(w) = (<v, w>, \alpha w) %]]&gt;</script>
+
+<h2 id="code">Code</h2>
+
+<p>We need an additional implicit structure with combinators:</p>
+
+<p>```scala
+case class InnerProduct<a href="dot: (V, V) =&gt; Double">V</a></p>
+
+<p>def vdot<a href="implicit ip: InnerProduct[V]">V</a> = ip.dot
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linear Structure, Differentiable Functions (Implicit) Combinators]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2014/12/31/linear-structure-implicits/"/>
+    <updated>2014-12-31T08:52:22+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2014/12/31/linear-structure-implicits</id>
+    <content type="html"><![CDATA[<p>The best way to build differentiable functions for the typical learning system in function-finder is using <em>combinators</em>. At present there is some ad hoc version of this. The better way is to use linear structures systematically.</p>
+
+<h2 id="linear-structures">Linear structures</h2>
+
+<p><code>scala
+case class LinearStructure[A](sum: (A, A) =&gt; A, mult : (Double, A) =&gt; A){
+  def diff(frm: A, remove: A) = sum(frm, mult(-1.0, remove))
+}
+</code></p>
+
+<p>Linear Spaces can be built with</p>
+
+<ul>
+  <li>Real numbers - Double</li>
+  <li>Finite Distributions have ++ and *</li>
+  <li>Pairs of linear spaces</li>
+  <li>Differentiable functions between linear spaces</li>
+  <li>(Eventually) Maps with values in Linear spaces - for representation learning.</li>
+</ul>
+
+<p>``` scala
+case class LinearStructure<a href="sum: (A, A) =&gt; A, mult : (Double, A) =&gt; A">A</a>{
+  def diff(frm: A, remove: A) = sum(frm, mult(-1.0, remove))
+}</p>
+
+<p>implicit val RealsAsLinearStructure = LinearStructure<a href="(_+_), (_*_)">Double</a></p>
+
+<p>implicit def VectorPairs<a href="implicit lsa: LinearStructure[A], lsb: LinearStructure[B]">A, B</a>: LinearStructure[(A, B)] = {
+  def sumpair(fst: (A, B), scnd: (A, B)) =(lsa.sum(fst.<em>1, scnd.</em>1), lsb.sum(fst.<em>2, scnd.</em>2))</p>
+
+<p>def multpair(sc: Double, vect: (A, B)) = (lsa.mult(sc, vect.<em>1), lsb.mult(sc, vect.</em>2))</p>
+
+<p>LinearStructure(sumpair, multpair)
+}</p>
+
+<p>implicit def FiniteDistVec[T] = LinearStructure<a href="_++_, (w, d) =&gt; d * w">FiniteDistribution[T]</a>
+```</p>
+
+<h3 id="to-do">To Do:</h3>
+
+<ul>
+  <li>Add a field for the zero vector (done).</li>
+  <li>Create a linear structure for differentiable functions(done).</li>
+  <li>Have functions that implicitly use linear structures(done).</li>
+</ul>
+
+<h2 id="more-vector-structures">More vector structures</h2>
+
+<p>In addition, we need <em>inner products</em> for computing certain gradients as well as <em>totals</em> for normalization. These are built for</p>
+
+<ul>
+  <li>Finite distributions</li>
+  <li>pairs</li>
+  <li>Real numbers</li>
+  <li>(Eventually) Maps with co-domain having inner products and totals.</li>
+</ul>
+
+<h2 id="differentiable-functions">Differentiable functions</h2>
+
+<p>``` scala
+trait DiffbleFunction[A, B] extends (A =&gt; B){self =&gt;
+  def grad(a: A) : B =&gt; A</p>
+
+<p>/**
+  * Composition f *: g is f(g(_))
+  */
+  def *:<a href="that: DiffbleFunction[B, C]">C</a> = andThen(that)</p>
+
+<p>def andThen<a href="that: =&gt; DiffbleFunction[B, C]">C</a>: DiffbleFunction[A, C] = DiffbleFunction((a: A) =&gt; that(this(a)))(
+    (a: A) =&gt;
+    (c: C) =&gt;
+    grad(a)(that.grad(this(a))(c)))
+  }</p>
+
+<p>object DiffbleFunction{
+    def apply<a href="f: =&gt; A =&gt; B">A, B</a>(grd: =&gt; A =&gt; (B =&gt; A)) = new DiffbleFunction[A, B]{
+      def apply(a: A) = f(a)</p>
+
+<pre><code>  def grad(a: A) = grd(a)
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Differentiable functions are built from</p>
+
+<ul>
+  <li>Composing and iterating differentiable functions.</li>
+  <li>(Partial) Moves on X giving FD(X) -&gt; FD(X)</li>
+  <li>(Partial) Combinations on X giving FD(X) -&gt; FD(X)</li>
+  <li>Co-ordinate functions on FD(X).</li>
+  <li>Inclusion of a basis vector.</li>
+  <li>Projections and Inclusions for pairs.</li>
+  <li>Scalar product of differentiable functions, $x\mapsto f(x) * g(x)$ with $f: V \to \mathbb{R}$ and $g: V\to W$.</li>
+  <li>The sum of a set of differentiable functions X \to Y, with the set of functions depending on $x : X$.</li>
+</ul>
+
+<p>From the above, we should be able to build.</p>
+
+<ul>
+  <li><strong>Islands:</strong> Recursive definitions in terms of the function itself - more precisely a sequence of functions at different <em>depths</em> (in a more rational form).</li>
+  <li><strong>Multiple islands:</strong> A recurrence corresponding to a lot of island terms.</li>
+</ul>
+
+<h3 id="to-do-1">To Do:</h3>
+
+<ul>
+  <li>Clean up the present ad hoc constructors replacing them by combinators.</li>
+</ul>
+
+<h2 id="islands">Islands</h2>
+
+<ul>
+  <li>After adding an island, we get a family of differentiable functions $f_d$ indexed by depth.</li>
+  <li>This can be simply viewed as a recursive definition.</li>
+  <li>
+    <p>Given a function $g$, we get a function at depth $d$ by iterating $2^d$ times by repeated squaring.</p>
+  </li>
+  <li>
+    <p>Determined by:</p>
+
+    <ul>
+      <li>An initial family of differentiable functions $g_d$, corresponding to iterating $2^d$ times.</li>
+      <li>A transformation on differentiable functions $f \mapsto L(f)$.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Recurrence relation:</p>
+
+    <ul>
+      <li>$f_d = g_d + L(f_{d-1})$, for $d \geq 0$, with $f_{-1} = 0$.</li>
+      <li>Here $L(f) = i \circ f \circ j$.</li>
+      <li>When $d=0$, the recurrence relation just gives just gives $id = id$.</li>
+      <li>Then $d=1$, we get $f_1 = g_1 + L(id)$.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="multiple-islands">Multiple Islands</h2>
+
+<ul>
+  <li>We have a set of islands associated to a collection of objects, with a differentiable function associated to each.</li>
+  <li>We can assume the set to be larger, with functions for the rest being zero. So the set is really an a priori bound.</li>
+  <li>We get a recurence relation:</li>
+  <li>$f_d(\cdot) = g_d(\cdot) + \sum_v i_v(\cdot) * L_v(f_{d-1}(\cdot)).$</li>
+  <li>Here $i_v$ is evaluation at $v$, for a pair of finite distributions.</li>
+</ul>
+]]></content>
+  </entry>
+  
+</feed>
