@@ -3,7 +3,7 @@ layout: post
 title: "gradient of product"
 date: 2015-01-02 10:38:10 +0530
 comments: true
-categories:
+categories: Proving-Ground
 ---
 
 A subtle differentiable function is the scalar product,

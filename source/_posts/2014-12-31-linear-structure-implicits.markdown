@@ -3,7 +3,7 @@ layout: post
 title: "Linear structure, Differentiable functions (implicit) Combinators"
 date: 2014-12-31 08:52:22 +0530
 comments: true
-categories:
+categories: Proving-Ground
 ---
 
 The best way to build differentiable functions for the typical learning system in function-finder is using _combinators_. At present there is some ad hoc version of this. The better way is to use linear structures systematically.
