@@ -4,7 +4,7 @@
   <title><![CDATA[Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2015-01-07T12:20:11+05:30</updated>
+  <updated>2015-01-09T16:00:46+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Feedbacks]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2015/01/09/feedbacks/"/>
+    <updated>2015-01-09T12:03:51+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2015/01/09/feedbacks</id>
+    <content type="html"><![CDATA[<h3 id="matching-distributions">Matching distributions:</h3>
+
+<ul>
+  <li>Given a target distribution on $Y$, we get a feedback towards the target.</li>
+  <li>Given a distribution on $X$ and $f: X\to Y$, we have a pushforward distribution. We get an image feedback.</li>
+  <li>To get a feedback on $X$, we need to distribute among all terms with a given image proportional to the term, or depending only on the coefficient of the image image.</li>
+  <li><strong>Question</strong> Can we define this shift on $X$ in one step correctly?</li>
+  <li><strong>Gradient view:</strong> Just view $f$ as a differentiable function and back-propagate by the gradient. This shifts weights independently.</li>
+</ul>
+
+<h2 id="terms-matching-types">Terms matching types</h2>
+
+<ul>
+  <li>We compare the distribution of terms that are types with the map from terms to types.</li>
+  <li>The difference between these gives a flow on types.</li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Blending Pruning and Backprop]]></title>
