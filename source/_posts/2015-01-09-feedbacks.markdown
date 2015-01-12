@@ -6,7 +6,11 @@ comments: true
 categories:
 ---
 
-### Matching distributions:
+## Feedbacks
+
+* A feedback is a function $f: X \to X$, typically depending on parameters.
+
+## Matching distributions:
 
 * Given a target distribution on $Y$, we get a feedback towards the target.
 * Given a distribution on $X$ and $f: X\to Y$, we have a pushforward distribution. We get an image feedback.
