@@ -4,7 +4,7 @@
   <title><![CDATA[Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2015-01-09T16:00:46+05:30</updated>
+  <updated>2015-01-12T12:10:32+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -14,11 +14,128 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Dynamical Actors]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors/"/>
+    <updated>2015-01-12T09:44:57+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors</id>
+    <content type="html"><![CDATA[<h2 id="context">Context</h2>
+
+<ul>
+  <li>Dynamical system $f: X\to X$ depending on parameters.</li>
+  <li>Goals to check.</li>
+</ul>
+
+<h2 id="worker">Worker</h2>
+
+<ul>
+  <li>Called with state, parameter,iterations, goals.</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">LoopWork</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">X</span><span class="o">,</span> <span class="n">p</span><span class="k">:</span> <span class="kt">P</span><span class="o">,</span> <span class="n">loops</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">goals</span><span class="k">:</span> <span class="kt">X</span> <span class="o">=&gt;</span> <span class="nc">Boolean</span> <span class="k">=</span> <span class="nc">List</span><span class="o">())</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>Iterates until success or loops completed.</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">LoopsDone</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="k">final</span> <span class="k">:</span> <span class="kt">X</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">Success</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="k">final</span> <span class="k">:</span> <span class="kt">X</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="commits">Commits</h3>
+
+<ul>
+  <li>State</li>
+  <li>Hash-tag</li>
+  <li>Ancestor</li>
+</ul>
+
+<h2 id="hub">Hub</h2>
+
+<ul>
+  <li>Maintains all workers and communication with outside.</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">object</span> <span class="nc">ActorList</span> <span class="c1">// returns actor ids and whether they are paused.</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">QueryState</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">pause</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">QueryParams</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="c1">// look up parameters at hub.</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">UpdateParams</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">p</span><span class="k">:</span> <span class="kt">P</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">UpdateState</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">x</span><span class="k">:</span> <span class="kt">X</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">PauseWorker</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">ResumeWorker</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">StopWorker</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">UpdateGoals</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">goals</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">X</span> <span class="k">=&gt;</span> <span class="kt">Boolean</span><span class="o">])</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>For simplicity, assume that pausing on success is independent of actor, and on query is part of the query string.</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">ActorState</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">X</span><span class="o">,</span> <span class="n">p</span><span class="k">:</span> <span class="kt">P</span><span class="o">,</span>
+</span><span class="line">    <span class="n">loops</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span>
+</span><span class="line">    <span class="n">paused</span> <span class="k">:</span> <span class="kt">Boolean</span><span class="o">,</span>
+</span><span class="line">    <span class="n">lastCommit</span><span class="k">:</span> <span class="kt">Long</span>
+</span><span class="line">    <span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="callback-on-success">Callback on success</h3>
+
+<ul>
+  <li>Commit the state.</li>
+  <li>Record that the commit contains a success.</li>
+  <li>Possibly update goals removing those attained.</li>
+  <li>SSE log the goals.</li>
+</ul>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Feedbacks]]></title>
     <link href="http://siddhartha-gadgil.github.io/blog/2015/01/09/feedbacks/"/>
     <updated>2015-01-09T12:03:51+05:30</updated>
     <id>http://siddhartha-gadgil.github.io/blog/2015/01/09/feedbacks</id>
-    <content type="html"><![CDATA[<h3 id="matching-distributions">Matching distributions:</h3>
+    <content type="html"><![CDATA[<h2 id="feedbacks">Feedbacks</h2>
+
+<ul>
+  <li>A feedback is a function $f: X \to X$, typically depending on parameters.</li>
+</ul>
+
+<h2 id="matching-distributions">Matching distributions:</h2>
 
 <ul>
   <li>Given a target distribution on $Y$, we get a feedback towards the target.</li>

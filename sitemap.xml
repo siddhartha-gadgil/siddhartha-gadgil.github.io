@@ -28,21 +28,21 @@
     </url>
     <url>
         <loc>http://siddhartha-gadgil.github.io/blog/2014/12/31/quasi-literate-programming/</loc>
-        <lastmod>2015-01-07T10:44:54+05:30</lastmod>
+        <lastmod>2015-01-12T09:45:16+05:30</lastmod>
     </url>
     <url>
         <loc>http://siddhartha-gadgil.github.io/blog/2014/12/31/linear-structure-implicits/</loc>
-        <lastmod>2015-01-07T10:48:13+05:30</lastmod>
+        <lastmod>2015-01-12T09:45:16+05:30</lastmod>
     </url>
     <url>
         <loc>http://siddhartha-gadgil.github.io/blog/2015/01/02/gradient-of-product/</loc>
-        <lastmod>2015-01-07T10:48:13+05:30</lastmod>
+        <lastmod>2015-01-12T09:45:16+05:30</lastmod>
     </url>
     <url>
         <loc>
             http://siddhartha-gadgil.github.io/blog/2015/01/02/differentiable-function-combinators/
         </loc>
-        <lastmod>2015-01-07T10:48:13+05:30</lastmod>
+        <lastmod>2015-01-12T09:45:16+05:30</lastmod>
     </url>
     <url>
         <loc>
@@ -52,11 +52,15 @@
     </url>
     <url>
         <loc>http://siddhartha-gadgil.github.io/blog/2015/01/09/feedbacks/</loc>
-        <lastmod>2015-01-09T13:58:50+05:30</lastmod>
+        <lastmod>2015-01-12T09:45:16+05:30</lastmod>
+    </url>
+    <url>
+        <loc>http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors/</loc>
+        <lastmod>2015-01-12T12:10:19+05:30</lastmod>
     </url>
     <url>
         <loc>http://siddhartha-gadgil.github.io/</loc>
-        <lastmod>2015-01-09T13:58:50+05:30</lastmod>
+        <lastmod>2015-01-12T12:10:19+05:30</lastmod>
     </url>
     <url>
         <loc>http://siddhartha-gadgil.github.io/robots.txt</loc>
@@ -64,6 +68,6 @@
     </url>
     <url>
         <loc>http://siddhartha-gadgil.github.io/blog/archives/</loc>
-        <lastmod>2015-01-09T13:58:50+05:30</lastmod>
+        <lastmod>2015-01-12T12:10:19+05:30</lastmod>
     </url>
 </urlset>

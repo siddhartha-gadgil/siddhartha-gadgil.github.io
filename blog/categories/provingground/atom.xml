@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ProvingGround | Automating Mathematics]]></title>
+  <link href="http://siddhartha-gadgil.github.io/blog/categories/provingground/atom.xml" rel="self"/>
+  <link href="http://siddhartha-gadgil.github.io/"/>
+  <updated>2015-01-12T12:10:32+05:30</updated>
+  <id>http://siddhartha-gadgil.github.io/</id>
+  <author>
+    <name><![CDATA[Siddhartha Gadgil]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Dynamical Actors]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors/"/>
+    <updated>2015-01-12T09:44:57+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors</id>
+    <content type="html"><![CDATA[<h2 id="context">Context</h2>
+
+<ul>
+  <li>Dynamical system $f: X\to X$ depending on parameters.</li>
+  <li>Goals to check.</li>
+</ul>
+
+<h2 id="worker">Worker</h2>
+
+<ul>
+  <li>Called with state, parameter,iterations, goals.</li>
+</ul>
+
+<p><code>scala
+  case class LoopWork(x: X, p: P, loops: Int, goals: X =&gt; Boolean = List())
+</code></p>
+
+<ul>
+  <li>Iterates until success or loops completed.</li>
+</ul>
+
+<p>```scala
+  case class LoopsDone(id: String, final : X)</p>
+
+<p>case class Success(id: String, final : X)
+```</p>
+
+<h3 id="commits">Commits</h3>
+
+<ul>
+  <li>State</li>
+  <li>Hash-tag</li>
+  <li>Ancestor</li>
+</ul>
+
+<h2 id="hub">Hub</h2>
+
+<ul>
+  <li>Maintains all workers and communication with outside.</li>
+</ul>
+
+<p>```scala
+  case object ActorList // returns actor ids and whether they are paused.</p>
+
+<p>case class QueryState(id: String, pause: Boolean = true)</p>
+
+<p>case class QueryParams(id: String) // look up parameters at hub.</p>
+
+<p>case class UpdateParams(id: String, p: P)</p>
+
+<p>case class UpdateState(id: String, x: X)</p>
+
+<p>case class PauseWorker(id: String)</p>
+
+<p>case class ResumeWorker(id: String)</p>
+
+<p>case class StopWorker(id: String)</p>
+
+<p>case class UpdateGoals(id: String, goals: List[X =&gt; Boolean])</p>
+
+<p>```</p>
+
+<ul>
+  <li>For simplicity, assume that pausing on success is independent of actor, and on query is part of the query string.</li>
+</ul>
+
+<p>```scala</p>
+
+<p>case class ActorState(x: X, p: P,
+    loops: Int,
+    paused : Boolean,
+    lastCommit: Long
+    )
+```</p>
+
+<h3 id="callback-on-success">Callback on success</h3>
+
+<ul>
+  <li>Commit the state.</li>
+  <li>Record that the commit contains a success.</li>
+  <li>Possibly update goals removing those attained.</li>
+  <li>SSE log the goals.</li>
+</ul>
+]]></content>
+  </entry>
+  
+</feed>

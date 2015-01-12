@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Dynamical Actors - Automating Mathematics</title>
+  <meta name="author" content="Siddhartha Gadgil">
+
+  
+  <meta name="description" content="Context Dynamical system $f: X\to X$ depending on parameters. Goals to check. Worker Called with state, parameter,iterations, goals. 1 case class &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Automating Mathematics" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$']],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  messageStyle: "none",
+  "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Automating Mathematics</a></h1>
+  
+    <h2>Working journal</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:siddhartha-gadgil.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Dynamical Actors</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-12T09:44:57+05:30" pubdate data-updated="true">Jan 12<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2 id="context">Context</h2>
+
+<ul>
+  <li>Dynamical system $f: X\to X$ depending on parameters.</li>
+  <li>Goals to check.</li>
+</ul>
+
+<h2 id="worker">Worker</h2>
+
+<ul>
+  <li>Called with state, parameter,iterations, goals.</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">LoopWork</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">X</span><span class="o">,</span> <span class="n">p</span><span class="k">:</span> <span class="kt">P</span><span class="o">,</span> <span class="n">loops</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">goals</span><span class="k">:</span> <span class="kt">X</span> <span class="o">=&gt;</span> <span class="nc">Boolean</span> <span class="k">=</span> <span class="nc">List</span><span class="o">())</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>Iterates until success or loops completed.</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">LoopsDone</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="k">final</span> <span class="k">:</span> <span class="kt">X</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">Success</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="k">final</span> <span class="k">:</span> <span class="kt">X</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="commits">Commits</h3>
+
+<ul>
+  <li>State</li>
+  <li>Hash-tag</li>
+  <li>Ancestor</li>
+</ul>
+
+<h2 id="hub">Hub</h2>
+
+<ul>
+  <li>Maintains all workers and communication with outside.</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">object</span> <span class="nc">ActorList</span> <span class="c1">// returns actor ids and whether they are paused.</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">QueryState</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">pause</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">QueryParams</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="c1">// look up parameters at hub.</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">UpdateParams</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">p</span><span class="k">:</span> <span class="kt">P</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">UpdateState</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">x</span><span class="k">:</span> <span class="kt">X</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">PauseWorker</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">ResumeWorker</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">StopWorker</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">UpdateGoals</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">goals</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">X</span> <span class="k">=&gt;</span> <span class="kt">Boolean</span><span class="o">])</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>For simplicity, assume that pausing on success is independent of actor, and on query is part of the query string.</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">ActorState</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">X</span><span class="o">,</span> <span class="n">p</span><span class="k">:</span> <span class="kt">P</span><span class="o">,</span>
+</span><span class="line">    <span class="n">loops</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span>
+</span><span class="line">    <span class="n">paused</span> <span class="k">:</span> <span class="kt">Boolean</span><span class="o">,</span>
+</span><span class="line">    <span class="n">lastCommit</span><span class="k">:</span> <span class="kt">Long</span>
+</span><span class="line">    <span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="callback-on-success">Callback on success</h3>
+
+<ul>
+  <li>Commit the state.</li>
+  <li>Record that the commit contains a success.</li>
+  <li>Possibly update goals removing those attained.</li>
+  <li>SSE log the goals.</li>
+</ul>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Siddhartha Gadgil</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-12T09:44:57+05:30" pubdate data-updated="true">Jan 12<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/provingground/'>ProvingGround</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors/" data-via="" data-counturl="http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/09/feedbacks/" title="Previous Post: feedbacks">&laquo; feedbacks</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/12/dynamical-actors/">Dynamical Actors</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/09/feedbacks/">Feedbacks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/07/blending-pruning-and-backprop/">Blending Pruning and Backprop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/02/differentiable-function-combinators/">Differentiable Function Combinators</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/02/gradient-of-product/">Gradient of Product</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/siddhartha-gadgil">@siddhartha-gadgil</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'siddhartha-gadgil',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/+SiddharthaGadgil?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Siddhartha Gadgil -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'logictypesandspaces';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors/';
+        var disqus_url = 'http://siddhartha-gadgil.github.io/blog/2015/01/12/dynamical-actors/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
