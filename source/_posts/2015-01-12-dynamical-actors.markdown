@@ -31,12 +31,14 @@ categories: ProvingGround
 
 * commits
 * solutions: commit, goal.
+* goals
 
 ### Commits
 
 * State
 * Hash-tag : string representing hex code of hash-tag
 * Ancestor
+* Meta-data: who committed, why.
 
 ```scala
   def commit(x: X, parent: String) : String // returns hash-tag
@@ -44,7 +46,7 @@ categories: ProvingGround
 
 ## Hub
 
-* Maintains all workers and communication with outside.
+* Maintains all workers and communication with outside. Messages (and a few similar ones).
 
 ```scala
   case object ActorList // returns actor ids and whether they are paused.
@@ -85,3 +87,8 @@ categories: ProvingGround
 * Record that the commit contains a success.
 * Possibly update goals removing those attained.
 * SSE log the goals.
+
+## Channels
+
+* from interface: post JSON to server.
+* to interface: send SSE with _type_ used for a switch to decide action.
