@@ -135,18 +135,31 @@ MathJax.Hub.Config({
 </span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">Success</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="k">final</span> <span class="k">:</span> <span class="kt">X</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<h2 id="database">Database</h2>
+
+<ul>
+  <li>commits</li>
+  <li>solutions: commit, goal.</li>
+  <li>goals</li>
+</ul>
+
 <h3 id="commits">Commits</h3>
 
 <ul>
   <li>State</li>
-  <li>Hash-tag</li>
+  <li>Hash-tag : string representing hex code of hash-tag</li>
   <li>Ancestor</li>
+  <li>Meta-data: who committed, why.</li>
 </ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">def</span> <span class="n">commit</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">X</span><span class="o">,</span> <span class="n">parent</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">:</span> <span class="kt">String</span> <span class="c1">// returns hash-tag</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <h2 id="hub">Hub</h2>
 
 <ul>
-  <li>Maintains all workers and communication with outside.</li>
+  <li>Maintains all workers and communication with outside. Messages (and a few similar ones).</li>
 </ul>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
@@ -166,6 +179,8 @@ MathJax.Hub.Config({
 <span class="line-number">15</span>
 <span class="line-number">16</span>
 <span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
 </pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">object</span> <span class="nc">ActorList</span> <span class="c1">// returns actor ids and whether they are paused.</span>
 </span><span class="line">
 </span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">QueryState</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">pause</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
@@ -183,10 +198,12 @@ MathJax.Hub.Config({
 </span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">StopWorker</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
 </span><span class="line">
 </span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">UpdateGoals</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">goals</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">X</span> <span class="k">=&gt;</span> <span class="kt">Boolean</span><span class="o">])</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">ActorLoops</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">loops</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-  <li>For simplicity, assume that pausing on success is independent of actor, and on query is part of the query string.</li>
+  <li>For simplicity, assume that pausing on success is independent of actor, and pausing on query is part of the query string.</li>
 </ul>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
@@ -208,6 +225,13 @@ MathJax.Hub.Config({
   <li>Record that the commit contains a success.</li>
   <li>Possibly update goals removing those attained.</li>
   <li>SSE log the goals.</li>
+</ul>
+
+<h2 id="channels">Channels</h2>
+
+<ul>
+  <li>from interface: post JSON to server.</li>
+  <li>to interface: send SSE with <em>type</em> used for a switch to decide action.</li>
 </ul>
 </div>
 

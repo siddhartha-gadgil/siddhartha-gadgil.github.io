@@ -4,7 +4,7 @@
   <title><![CDATA[Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2015-01-12T12:10:32+05:30</updated>
+  <updated>2015-01-16T14:12:44+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -47,18 +47,31 @@
 </span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">Success</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="k">final</span> <span class="k">:</span> <span class="kt">X</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<h2 id="database">Database</h2>
+
+<ul>
+  <li>commits</li>
+  <li>solutions: commit, goal.</li>
+  <li>goals</li>
+</ul>
+
 <h3 id="commits">Commits</h3>
 
 <ul>
   <li>State</li>
-  <li>Hash-tag</li>
+  <li>Hash-tag : string representing hex code of hash-tag</li>
   <li>Ancestor</li>
+  <li>Meta-data: who committed, why.</li>
 </ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">def</span> <span class="n">commit</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">X</span><span class="o">,</span> <span class="n">parent</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">:</span> <span class="kt">String</span> <span class="c1">// returns hash-tag</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <h2 id="hub">Hub</h2>
 
 <ul>
-  <li>Maintains all workers and communication with outside.</li>
+  <li>Maintains all workers and communication with outside. Messages (and a few similar ones).</li>
 </ul>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
@@ -78,6 +91,8 @@
 <span class="line-number">15</span>
 <span class="line-number">16</span>
 <span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
 </pre></td><td class="code"><pre><code class="scala"><span class="line">  <span class="k">case</span> <span class="k">object</span> <span class="nc">ActorList</span> <span class="c1">// returns actor ids and whether they are paused.</span>
 </span><span class="line">
 </span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">QueryState</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">pause</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
@@ -95,10 +110,12 @@
 </span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">StopWorker</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
 </span><span class="line">
 </span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">UpdateGoals</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">goals</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">X</span> <span class="k">=&gt;</span> <span class="kt">Boolean</span><span class="o">])</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">case</span> <span class="k">class</span> <span class="nc">ActorLoops</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">loops</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-  <li>For simplicity, assume that pausing on success is independent of actor, and on query is part of the query string.</li>
+  <li>For simplicity, assume that pausing on success is independent of actor, and pausing on query is part of the query string.</li>
 </ul>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
@@ -121,6 +138,13 @@
   <li>Possibly update goals removing those attained.</li>
   <li>SSE log the goals.</li>
 </ul>
+
+<h2 id="channels">Channels</h2>
+
+<ul>
+  <li>from interface: post JSON to server.</li>
+  <li>to interface: send SSE with <em>type</em> used for a switch to decide action.</li>
+</ul>
 ]]></content>
   </entry>
   
@@ -132,7 +156,21 @@
     <content type="html"><![CDATA[<h2 id="feedbacks">Feedbacks</h2>
 
 <ul>
-  <li>A feedback is a function $f: X \to X$, typically depending on parameters.</li>
+  <li>A feedback is a function $f: X \to X$, typically depending on parameters, but which is <em>not</em> differentiable (i.e., no gradient).</li>
+</ul>
+
+<h2 id="combinators">Combinators</h2>
+
+<ul>
+  <li><em>Linear Structure:</em> We can define a linear structure on <em>A =&gt; B</em> given one on <em>B</em>. This does not collide with that on differentiable functions as linear structures are not covariant.</li>
+  <li><em>Conjugation</em>: Given a differentiable function $f: X \to Y$ and a (feedback) function $g: Y\to Y$, we can define a conjugate function $g^f: X\to X$ by</li>
+</ul>
+
+<script type="math/tex; mode=display">g^f(x) = \Delta f(x)(g(f(x))).</script>
+
+<ul>
+  <li>This behaves well with respect to composition of differentiable functions and linear combinations of feedbacks.</li>
+  <li><em>Partial conjugation:</em> Sometimes the feedback also depends on $x \in X$, so we have $g: X\to Y$. We are then back-propagating $g$ using $f$.</li>
 </ul>
 
 <h2 id="matching-distributions">Matching distributions:</h2>
@@ -150,6 +188,30 @@
 <ul>
   <li>We compare the distribution of terms that are types with the map from terms to types.</li>
   <li>The difference between these gives a flow on types.</li>
+  <li>We back-propagate to get a flow on terms.</li>
+</ul>
+
+<h2 id="approximate-matches">Approximate matches</h2>
+
+<ul>
+  <li>We can filter by having a specific type, and then an error matching having a refined type (after some function application).</li>
+  <li>For a given term, we get the product of its weight with an error factor.</li>
+  <li>In terms of combinators, we replace inclusion by a weighted inclusion, or a product of the inclusion with a <em>conformal factor</em>. We need a new basic differentiable function.</li>
+</ul>
+
+<h2 id="blending-feedbacks">Blending feedbacks.</h2>
+
+<ul>
+  <li>As in the case of matching types, suppose
+    <ul>
+      <li>$X$ is a finite distribution.</li>
+      <li>various feedbacks are based on atoms.</li>
+      <li>we have weights for the various feedbacks.</li>
+    </ul>
+  </li>
+  <li>We give more credit for feedback components attained by fewer terms.</li>
+  <li>This is achieved by sharing the feedback coming from one component, instead of just giving gradient</li>
+  <li>The <em>terms representing types</em> feedback is a special instance of this.</li>
 </ul>
 ]]></content>
   </entry>
@@ -215,6 +277,7 @@
   <li>inclusions to (V, W) (dome)</li>
   <li>evaluation of a finite distribution at a point.</li>
   <li>atomic distribution as a function of weight.</li>
+  <li>point-wise multiplication of a finite distribution by a given function.</li>
   <li>sum of a set of functions, with even the set depending on argument (done).
     <ul>
       <li>this can be interpreted as the sum of a fixed set of functions, but with all but finitely many  zero.</li>
@@ -241,6 +304,12 @@
       <li>DiffbleFunction[V, V] to a class with a multiplication method **:</li>
     </ul>
   </li>
+</ul>
+
+<h3 id="to-do">To Do:</h3>
+
+<ul>
+  <li>Construct differentiable functions for Finite Distributions - atom, evaluate and point-wise product.</li>
 </ul>
 ]]></content>
   </entry>

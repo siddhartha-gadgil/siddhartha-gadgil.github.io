@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Proving-Ground | Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/blog/categories/proving-ground/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2015-01-12T12:10:32+05:30</updated>
+  <updated>2015-01-16T14:12:44+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -74,6 +74,7 @@
   <li>inclusions to (V, W) (dome)</li>
   <li>evaluation of a finite distribution at a point.</li>
   <li>atomic distribution as a function of weight.</li>
+  <li>point-wise multiplication of a finite distribution by a given function.</li>
   <li>sum of a set of functions, with even the set depending on argument (done).
     <ul>
       <li>this can be interpreted as the sum of a fixed set of functions, but with all but finitely many  zero.</li>
@@ -100,6 +101,12 @@
       <li>DiffbleFunction[V, V] to a class with a multiplication method **:</li>
     </ul>
   </li>
+</ul>
+
+<h3 id="to-do">To Do:</h3>
+
+<ul>
+  <li>Construct differentiable functions for Finite Distributions - atom, evaluate and point-wise product.</li>
 </ul>
 ]]></content>
   </entry>

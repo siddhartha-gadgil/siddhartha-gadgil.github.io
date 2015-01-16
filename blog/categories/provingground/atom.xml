@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ProvingGround | Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/blog/categories/provingground/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2015-01-12T12:10:32+05:30</updated>
+  <updated>2015-01-16T14:12:44+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -45,18 +45,31 @@
 <p>case class Success(id: String, final : X)
 ```</p>
 
+<h2 id="database">Database</h2>
+
+<ul>
+  <li>commits</li>
+  <li>solutions: commit, goal.</li>
+  <li>goals</li>
+</ul>
+
 <h3 id="commits">Commits</h3>
 
 <ul>
   <li>State</li>
-  <li>Hash-tag</li>
+  <li>Hash-tag : string representing hex code of hash-tag</li>
   <li>Ancestor</li>
+  <li>Meta-data: who committed, why.</li>
 </ul>
+
+<p><code>scala
+  def commit(x: X, parent: String) : String // returns hash-tag
+</code></p>
 
 <h2 id="hub">Hub</h2>
 
 <ul>
-  <li>Maintains all workers and communication with outside.</li>
+  <li>Maintains all workers and communication with outside. Messages (and a few similar ones).</li>
 </ul>
 
 <p>```scala
@@ -78,10 +91,11 @@
 
 <p>case class UpdateGoals(id: String, goals: List[X =&gt; Boolean])</p>
 
-<p>```</p>
+<p>case class ActorLoops(id: String, loops: Int)
+```</p>
 
 <ul>
-  <li>For simplicity, assume that pausing on success is independent of actor, and on query is part of the query string.</li>
+  <li>For simplicity, assume that pausing on success is independent of actor, and pausing on query is part of the query string.</li>
 </ul>
 
 <p>```scala</p>
@@ -100,6 +114,13 @@
   <li>Record that the commit contains a success.</li>
   <li>Possibly update goals removing those attained.</li>
   <li>SSE log the goals.</li>
+</ul>
+
+<h2 id="channels">Channels</h2>
+
+<ul>
+  <li>from interface: post JSON to server.</li>
+  <li>to interface: send SSE with <em>type</em> used for a switch to decide action.</li>
 </ul>
 ]]></content>
   </entry>
