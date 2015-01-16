@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Proving-Ground | Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/blog/categories/proving-ground/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2015-01-16T14:12:44+05:30</updated>
+  <updated>2015-01-16T16:44:50+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -61,7 +61,7 @@
     <link href="http://siddhartha-gadgil.github.io/blog/2015/01/02/differentiable-function-combinators/"/>
     <updated>2015-01-02T15:24:10+05:30</updated>
     <id>http://siddhartha-gadgil.github.io/blog/2015/01/02/differentiable-function-combinators</id>
-    <content type="html"><![CDATA[<h2 id="basic-functions-and-combinators">Basic functions and Combinators</h2>
+    <content type="html"><![CDATA[<h2 id="basic-functions-and-combinators-all-implemented">Basic functions and Combinators (all implemented)</h2>
 
 <p>We build differentiable functions for our basic learning system using some basic ones and combinators:</p>
 
@@ -72,9 +72,9 @@
   <li>identity function (done).</li>
   <li>projections on (V, W) (done)</li>
   <li>inclusions to (V, W) (dome)</li>
-  <li>evaluation of a finite distribution at a point.</li>
-  <li>atomic distribution as a function of weight.</li>
-  <li>point-wise multiplication of a finite distribution by a given function.</li>
+  <li>evaluation of a finite distribution at a point (done).</li>
+  <li>atomic distribution as a function of weight (done).</li>
+  <li>point-wise multiplication of a finite distribution by a given function (done).</li>
   <li>sum of a set of functions, with even the set depending on argument (done).
     <ul>
       <li>this can be interpreted as the sum of a fixed set of functions, but with all but finitely many  zero.</li>
