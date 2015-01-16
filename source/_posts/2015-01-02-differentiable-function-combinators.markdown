@@ -6,7 +6,7 @@ comments: true
 categories: Proving-Ground
 ---
 
-## Basic functions and Combinators
+## Basic functions and Combinators (all implemented)
 
 We build differentiable functions for our basic learning system using some basic ones and combinators:
 
@@ -16,9 +16,9 @@ We build differentiable functions for our basic learning system using some basic
 * identity function (done).
 * projections on (V, W) (done)
 * inclusions to (V, W) (dome)
-* evaluation of a finite distribution at a point.
-* atomic distribution as a function of weight.
-* point-wise multiplication of a finite distribution by a given function.
+* evaluation of a finite distribution at a point (done).
+* atomic distribution as a function of weight (done).
+* point-wise multiplication of a finite distribution by a given function (done).
 * sum of a set of functions, with even the set depending on argument (done).
   * this can be interpreted as the sum of a fixed set of functions, but with all but finitely many  zero.
 * repeated squaring $k$ times, with $k=0$ and $k<0$ cases (done).
