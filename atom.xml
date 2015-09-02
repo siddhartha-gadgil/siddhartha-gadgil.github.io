@@ -4,7 +4,7 @@
   <title><![CDATA[Automating Mathematics]]></title>
   <link href="http://siddhartha-gadgil.github.io/atom.xml" rel="self"/>
   <link href="http://siddhartha-gadgil.github.io/"/>
-  <updated>2015-01-16T16:44:50+05:30</updated>
+  <updated>2015-09-02T09:39:27+05:30</updated>
   <id>http://siddhartha-gadgil.github.io/</id>
   <author>
     <name><![CDATA[Siddhartha Gadgil]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Andrews-Curtis: First Run]]></title>
+    <link href="http://siddhartha-gadgil.github.io/blog/2015/09/02/andrews-curtis-first-run/"/>
+    <updated>2015-09-02T09:11:59+05:30</updated>
+    <id>http://siddhartha-gadgil.github.io/blog/2015/09/02/andrews-curtis-first-run</id>
+    <content type="html"><![CDATA[<p>Finally having run something in ProvingGround involving the main learning method, here are some observations.</p>
+
+<h2 id="simple-andrews-curtis-run">Simple Andrews-Curtis run</h2>
+
+<p>Starting with an initial distribution, evoution took place with the basic Andrews-Curtis moves. I ran two loops with two steps each, and then resumed and ran 3 more loops. The raw results are at <a href="https://github.com/siddhartha-gadgil/ProvingGround/blob/master/data/2015-09-01-simpleAC.dat">first run results</a></p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<ul>
+  <li>
+    <p>In terms of the highest weights, the method worked well even with such a short run. For example, the presentation $\langle a, b; \bar{a}, b\rangle$ was one of those with high weight.</p>
+  </li>
+  <li>
+    <p>In general, the order was according to expected behaviour.</p>
+  </li>
+  <li>
+    <p>However, virtually all theorems were remembered.</p>
+  </li>
+  <li>This stems from two weaknesses:
+    <ul>
+      <li>two high a weight for theorems relative to proofs, leading to memos favoured over deduction.</li>
+      <li>not enough methods of deduction, specifically exlusion of multiplication-inversion moves.</li>
+    </ul>
+  </li>
+  <li>These can be corrected by:
+    <ul>
+      <li>adding more moves: multiplication-inversions, transpositions; or allowing composite moves.</li>
+      <li>lowering the probability of word-continuation in generating presentations (just a runtime parameter).</li>
+    </ul>
+  </li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Lambda Islands]]></title>
